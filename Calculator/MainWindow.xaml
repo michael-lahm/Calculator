@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
 
         <Viewbox Margin="0,0,0,10" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0">
-            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Text="TextBfglok"/>
+            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Text="0" Name="BlokAnswer"/>
         </Viewbox>
 
         <Grid Grid.Row="1">
@@ -48,62 +48,62 @@
                 </Style>
             </Grid.Resources>
 
-            <Button Grid.Column="1" Grid.Row="6">
+            <Button Grid.Column="1" Grid.Row="6" Click="Button_num_1">
                 <Viewbox>
                     <TextBlock Text="1"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="3" Grid.Row="6">
+            <Button Grid.Column="3" Grid.Row="6" Click="Button_num_2">
                 <Viewbox>
                     <TextBlock Text="2"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="5" Grid.Row="6">
+            <Button Grid.Column="5" Grid.Row="6" Click="Button_num_3">
                 <Viewbox>
                     <TextBlock Text="3"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="1" Grid.Row="4">
+            <Button Grid.Column="1" Grid.Row="4" Click="Button_num_4">
                 <Viewbox>
                     <TextBlock Text="4"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="3" Grid.Row="4">
+            <Button Grid.Column="3" Grid.Row="4" Click="Button_num_5">
                 <Viewbox>
                     <TextBlock Text="5"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="5" Grid.Row="4">
+            <Button Grid.Column="5" Grid.Row="4" Click="Button_num_6">
                 <Viewbox>
                     <TextBlock Text="6"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="1" Grid.Row="2">
+            <Button Grid.Column="1" Grid.Row="2" Click="Button_num_7">
                 <Viewbox>
                     <TextBlock Text="7"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="3" Grid.Row="2">
+            <Button Grid.Column="3" Grid.Row="2" Click="Button_num_8">
                 <Viewbox>
                     <TextBlock Text="8"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="5" Grid.Row="2">
+            <Button Grid.Column="5" Grid.Row="2" Click="Button_num_9">
                 <Viewbox>
                     <TextBlock Text="9"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="3" Grid.Row="8">
+            <Button Grid.Column="3" Grid.Row="8" Click="Button_num_0">
                 <Viewbox>
                     <TextBlock Text="0"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="1" Grid.Row="8">
+            <Button Grid.Column="1" Grid.Row="8" Click="Button_sign">
                 <Viewbox>
                     <TextBlock Text="+/-"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="5" Grid.Row="8">
+            <Button Grid.Column="5" Grid.Row="8" Click="Button_comma">
                 <Viewbox>
                     <TextBlock Text=","/>
                 </Viewbox>
@@ -113,12 +113,12 @@
                     <TextBlock Text="CE"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="3" Grid.Row="0">
+            <Button Grid.Column="3" Grid.Row="0" Click="Button_clear">
                 <Viewbox>
                     <TextBlock Text="C"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="5" Grid.Row="0">
+            <Button Grid.Column="5" Grid.Row="0" Click="Button_backspace">
                 <Viewbox>
                     <TextBlock Text="&lt;-"/>
                 </Viewbox>
