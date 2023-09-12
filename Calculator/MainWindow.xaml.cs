@@ -80,7 +80,10 @@ namespace Calculator
             internal void AddComma()
             {
                 if (comma != true)
+                {
                     input += ',';
+                    comma = true;
+                }
             }
 
             internal void InvertSign()
@@ -99,11 +102,16 @@ namespace Calculator
                 if (input.Length == 1)
                     Clear();
                 else
-                    input.Remove(input.Length - 1);
+                {
+                    if (input[input.Length - 1] == ',')
+                        comma = false;
+                    input = input.Remove(input.Length - 1);
+                }
             }
 
             internal void Clear()
             {
+                comma = false;
                 sign = false;
                 input = "0";
             }
