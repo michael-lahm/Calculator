@@ -20,185 +20,123 @@ namespace Calculator
     /// </summary>
     public partial class MainWindow : Window
     {
-        EditString downString;
+        private string? firstVar;
+        private string? secondVar;
+        private char operation;
+        private EditString downString;
         public MainWindow()
         {
+            operation = ' ';
             downString = new EditString();
             InitializeComponent();
         }
 
         private void Update()
         {
-            string text = downString.Input;
-            if (text.Length > 10)
-            {
-                BlokAnswer.Text = text;
-            }
-            else
-                BlokAnswer.Text = text;
+            firstVar = downString.Input;
+            BlokAnswer.Text = firstVar;
         }
 
-        internal class EditString
-        {
-            private string input;
-            public string Input 
-            { 
-                get
-                {
-                    if(sign)
-                        return '-' + input;
-                    else 
-                        return input;
-                }
-                private set { input = value; }
-            }
-            private bool comma;
-            private bool sign;
-            internal EditString()
-            {
-                comma = false;
-                sign = false;
-                input = "0";
-            }
-
-            internal void AddNumber(char symb)
-            {
-                if(input.Length < 20)
-                {
-                    if (symb != '0')
-                    {
-                        if (input.Length == 1 && input[0] == '0')
-                            input = symb + "";
-                        else
-                            input += symb;
-                    }
-                    else if (comma == true || input[0] != '0')
-                        input += symb;
-                }
-            }
-
-            internal void AddComma()
-            {
-                if (comma != true)
-                {
-                    input += ',';
-                    comma = true;
-                }
-            }
-
-            internal void InvertSign()
-            {
-                if (input.Length > 1 || input[0] != '0') 
-                { 
-                    if(sign)
-                        sign = false;
-                    else
-                        sign = true;
-                }
-            }
-
-            internal void DeletSymb()
-            {
-                if (input.Length == 1)
-                    Clear();
-                else
-                {
-                    if (input[input.Length - 1] == ',')
-                        comma = false;
-                    input = input.Remove(input.Length - 1);
-                }
-            }
-
-            internal void Clear()
-            {
-                comma = false;
-                sign = false;
-                input = "0";
-            }
-        }
-
-        private void Button_num_1(object sender, System.EventArgs e)
+        private void Button_num_1(object sender, EventArgs e)
         {
             downString.AddNumber('1');
             Update();
         }
 
-        private void Button_num_2(object sender, System.EventArgs e)
+        private void Button_num_2(object sender, EventArgs e)
         {
             downString.AddNumber('2');
             Update();
         }
 
-        private void Button_num_3(object sender, System.EventArgs e)
+        private void Button_num_3(object sender, EventArgs e)
         {
             downString.AddNumber('3');
             Update();
         }
 
-        private void Button_num_4(object sender, System.EventArgs e)
+        private void Button_num_4(object sender, EventArgs e)
         {
             downString.AddNumber('4');
             Update();
         }
 
-        private void Button_num_5(object sender, System.EventArgs e)
+        private void Button_num_5(object sender, EventArgs e)
         {
             downString.AddNumber('5');
             Update();
         }
 
-        private void Button_num_6(object sender, System.EventArgs e)
+        private void Button_num_6(object sender, EventArgs e)
         {
             downString.AddNumber('6');
             Update();
         }
 
-        private void Button_num_7(object sender, System.EventArgs e)
+        private void Button_num_7(object sender, EventArgs e)
         {
             downString.AddNumber('7');
             Update();
         }
 
-        private void Button_num_8(object sender, System.EventArgs e)
+        private void Button_num_8(object sender, EventArgs e)
         {
             downString.AddNumber('8');
             Update();
         }
 
-        private void Button_num_9(object sender, System.EventArgs e)
+        private void Button_num_9(object sender, EventArgs e)
         {
             downString.AddNumber('9');
             Update();
         }
 
-        private void Button_num_0(object sender, System.EventArgs e)
+        private void Button_num_0(object sender, EventArgs e)
         {
             downString.AddNumber('0');
             Update();
         }
 
-        private void Button_sign(object sender, System.EventArgs e)
+        private void Button_sign(object sender, EventArgs e)
         {
             downString.InvertSign();
             Update();
         }
 
-        private void Button_comma(object sender, System.EventArgs e)
+        private void Button_comma(object sender, EventArgs e)
         {
             downString.AddComma();
             Update();
         }
 
-        private void Button_backspace(object sender, System.EventArgs e)
+        private void Button_backspace(object sender, EventArgs e)
         {
             downString.DeletSymb();
             Update();
         }
 
-        private void Button_clear(object sender, System.EventArgs e)
+        private void Button_clear_down(object sender, EventArgs e)
         {
             downString.Clear();
             Update();
+        }
+
+        private void ExampleOperation()
+        {
+
+        }
+
+        private void Button_plus(object sender, EventArgs e)
+        {
+            if(firstVar == null)
+            {
+                secondVar = firstVar;
+                firstVar = "";
+                downString.Clear();
+                operation = '+';
+            }
+            else
+                ExampleOperation();
         }
     }
 }
