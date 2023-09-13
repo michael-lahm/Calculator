@@ -30,94 +30,41 @@ namespace Calculator
             InitializeComponent();
         }
 
-        private void Update()
+        private void UpdateFirst()
         {
             firstVar = downString.Input;
             BlockAnswer.Text = firstVar;
         }
 
-        private void Button_num_1(object sender, EventArgs e)
+        private void Button_num(object sender, EventArgs e)
         {
-            downString.AddNumber('1');
-            Update();
-        }
-
-        private void Button_num_2(object sender, EventArgs e)
-        {
-            downString.AddNumber('2');
-            Update();
-        }
-
-        private void Button_num_3(object sender, EventArgs e)
-        {
-            downString.AddNumber('3');
-            Update();
-        }
-
-        private void Button_num_4(object sender, EventArgs e)
-        {
-            downString.AddNumber('4');
-            Update();
-        }
-
-        private void Button_num_5(object sender, EventArgs e)
-        {
-            downString.AddNumber('5');
-            Update();
-        }
-
-        private void Button_num_6(object sender, EventArgs e)
-        {
-            downString.AddNumber('6');
-            Update();
-        }
-
-        private void Button_num_7(object sender, EventArgs e)
-        {
-            downString.AddNumber('7');
-            Update();
-        }
-
-        private void Button_num_8(object sender, EventArgs e)
-        {
-            downString.AddNumber('8');
-            Update();
-        }
-
-        private void Button_num_9(object sender, EventArgs e)
-        {
-            downString.AddNumber('9');
-            Update();
-        }
-
-        private void Button_num_0(object sender, EventArgs e)
-        {
-            downString.AddNumber('0');
-            Update();
+            char numInButton = ((TextBlock)((Viewbox)((Button)sender).Content).Child).Text[0];
+            downString.AddNumber(numInButton);
+            UpdateFirst();
         }
 
         private void Button_sign(object sender, EventArgs e)
         {
             downString.InvertSign();
-            Update();
+            UpdateFirst();
         }
 
         private void Button_comma(object sender, EventArgs e)
         {
             downString.AddComma();
-            Update();
+            UpdateFirst();
         }
 
         private void Button_backspace(object sender, EventArgs e)
         {
             downString.DeletSymb();
-            Update();
+            UpdateFirst();
         }
 
         private void Button_clear_down(object sender, EventArgs e)
         {
             downString.Clear();
-            Update();
+            UpdateFirst();
         }
 
         private void Button_clear_all(object sender, EventArgs e)
@@ -182,26 +129,30 @@ namespace Calculator
             return new OutResult(result.ToString(), true);
         }
 
-        private void InputOperation(char operation)
+        private void Button_operator(object sender, EventArgs e)
         {
-            if (firstVar != null)
+            char operInButton = ((TextBlock)((Viewbox)((Button)sender).Content).Child).Text[0];
+
+            if(secondVar == null)
             {
-                if (secondVar == null)
-                {
+                if (firstVar == null)
+                    secondVar = "0";
+                else
                     secondVar = firstVar;
-                    this.operation = operation;
-                    BlockOperation.Text = secondVar + operation;
-                    firstVar = null;
-                }
-                else if(this.operation != null)
-                {
+                operation = operInButton;
+                BlockOperation.Text = secondVar + operation;
+            }
+            else
+            {
+                if (operation != null && downString.Input != null)
+                    {
                     OutResult input = ExeсutOperation();
                     firstVar = null;
                     secondVar = null;
                     if (input.IsSuccess)
                     {
                         secondVar = input.Result;
-                        this.operation = operation;
+                        operation = operInButton;
                         BlockOperation.Text = secondVar + operation;
                         BlockAnswer.Text = secondVar;
                     }
@@ -213,92 +164,46 @@ namespace Calculator
                 }
                 else
                 {
-                    this.operation = operation;
+                    operation = operInButton;
                     BlockOperation.Text = secondVar + operation;
                 }
             }
-            else if (secondVar != null)
-            {
-                this.operation = operation;
-                BlockOperation.Text = secondVar + operation;
-            }
+
             downString.Clear();
-        }
-
-        private void Button_plus(object sender, EventArgs e)
-        {
-            InputOperation('+');
-        }
-
-        private void Button_minus(object sender, EventArgs e)
-        {
-            InputOperation('-');
-        }
-
-        private void Button_multiply(object sender, EventArgs e)
-        {
-            InputOperation('*');
-        }
-
-        private void Button_divide(object sender, EventArgs e)
-        {
-            InputOperation('/');
         }
 
         private void Button_equally(object sender, EventArgs e)
         {
-            if(operation == null)
+            if (firstVar == null)
+                firstVar = "0";
+
+            if (operation == null)
             {
-                if (firstVar == null)
-                    firstVar = "0";
                 secondVar = firstVar;
                 BlockOperation.Text = firstVar + '=';
-                downString.Clear();
             }
             else
             {
                 if (secondVar == null)
-                {
-                    firstVar = downString.Input;
                     secondVar = firstVar;
-                    OutResult input = ExeсutOperation();
-                    if (input.IsSuccess)
-                    {
-                        BlockOperation.Text = secondVar + operation + firstVar + '=';
-                        firstVar = null;
-                        secondVar = null;
-                        secondVar = input.Result;
-                        BlockAnswer.Text = secondVar;
-                    }
-                    else
-                    {
-                        firstVar = null;
-                        secondVar = null;
-                        BlockAnswer.Text = input.ErrorMessage;
-                        BlockOperation.Text = string.Empty;
-                    }
+
+                OutResult input = ExeсutOperation();
+
+                if (input.IsSuccess)
+                {
+                    BlockOperation.Text = secondVar + operation + firstVar + '=';
+                    secondVar = input.Result;
+                    BlockAnswer.Text = secondVar;
                 }
                 else
                 {
-                    firstVar = downString.Input;
-                    OutResult input = ExeсutOperation();
-                    if (input.IsSuccess)
-                    {
-                        BlockOperation.Text = secondVar + operation + firstVar + '=';
-                        firstVar = null;
-                        secondVar = null;
-                        secondVar = input.Result;
-                        BlockAnswer.Text = secondVar;
-                    }
-                    else
-                    {
-                        firstVar = null;
-                        secondVar = null;
-                        BlockAnswer.Text = input.ErrorMessage;
-                        BlockOperation.Text = string.Empty;
-                    }
+                    secondVar = null;
+                    BlockAnswer.Text = input.ErrorMessage;
+                    BlockOperation.Text = string.Empty;
                 }
             }
+
+            downString.Clear();
         }
     }
 }

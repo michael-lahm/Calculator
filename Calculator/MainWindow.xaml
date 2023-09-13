@@ -51,52 +51,52 @@
                 </Style>
             </Grid.Resources>
 
-            <Button Grid.Column="1" Grid.Row="6" Click="Button_num_1">
+            <Button Grid.Column="1" Grid.Row="6" Click="Button_num">
                 <Viewbox>
                     <TextBlock Text="1"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="3" Grid.Row="6" Click="Button_num_2">
+            <Button Grid.Column="3" Grid.Row="6" Click="Button_num">
                 <Viewbox>
                     <TextBlock Text="2"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="5" Grid.Row="6" Click="Button_num_3">
+            <Button Grid.Column="5" Grid.Row="6" Click="Button_num">
                 <Viewbox>
                     <TextBlock Text="3"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="1" Grid.Row="4" Click="Button_num_4">
+            <Button Grid.Column="1" Grid.Row="4" Click="Button_num">
                 <Viewbox>
                     <TextBlock Text="4"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="3" Grid.Row="4" Click="Button_num_5">
+            <Button Grid.Column="3" Grid.Row="4" Click="Button_num">
                 <Viewbox>
                     <TextBlock Text="5"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="5" Grid.Row="4" Click="Button_num_6">
+            <Button Grid.Column="5" Grid.Row="4" Click="Button_num">
                 <Viewbox>
                     <TextBlock Text="6"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="1" Grid.Row="2" Click="Button_num_7">
+            <Button Grid.Column="1" Grid.Row="2" Click="Button_num">
                 <Viewbox>
                     <TextBlock Text="7"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="3" Grid.Row="2" Click="Button_num_8">
+            <Button Grid.Column="3" Grid.Row="2" Click="Button_num">
                 <Viewbox>
                     <TextBlock Text="8"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="5" Grid.Row="2" Click="Button_num_9">
+            <Button Grid.Column="5" Grid.Row="2" Click="Button_num">
                 <Viewbox>
                     <TextBlock Text="9"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="3" Grid.Row="8" Click="Button_num_0">
+            <Button Grid.Column="3" Grid.Row="8" Click="Button_num">
                 <Viewbox>
                     <TextBlock Text="0"/>
                 </Viewbox>
@@ -126,22 +126,22 @@
                     <TextBlock Text="&lt;-"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="7" Grid.Row="0" Click="Button_divide">
+            <Button Grid.Column="7" Grid.Row="0" Click="Button_operator">
                 <Viewbox>
                     <TextBlock Text="/"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="7" Grid.Row="2" Click="Button_multiply">
+            <Button Grid.Column="7" Grid.Row="2" Click="Button_operator">
                 <Viewbox>
                     <TextBlock Text="*"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="7" Grid.Row="4" Click="Button_minus">
+            <Button Grid.Column="7" Grid.Row="4" Click="Button_operator">
                 <Viewbox>
                     <TextBlock Text="-"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="7" Grid.Row="6" Click="Button_plus">
+            <Button Grid.Column="7" Grid.Row="6" Click="Button_operator">
                 <Viewbox>
                     <TextBlock Text="+"/>
                 </Viewbox>

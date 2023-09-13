@@ -8,8 +8,8 @@ namespace Calculator
 {
     internal class EditString
     {
-        private string input;
-        public string Input
+        private string? input;
+        public string? Input
         {
             get
             {
@@ -27,11 +27,11 @@ namespace Calculator
         {
             comma = false;
             sign = false;
-            input = "0";
         }
 
         internal void AddNumber(char symb)
         {
+            input ??= "0";
             if (input.Length < 20)
             {
                 if (symb != '0')
@@ -48,6 +48,7 @@ namespace Calculator
 
         internal void AddComma()
         {
+            input ??= "0";
             if (comma != true)
             {
                 input += ',';
@@ -57,7 +58,7 @@ namespace Calculator
 
         internal void InvertSign()
         {
-            if (input.Length > 1 || input[0] != '0')
+            if (input?.Length > 1 || input?[0] != '0')
             {
                 if (sign)
                     sign = false;
@@ -68,13 +69,20 @@ namespace Calculator
 
         internal void DeletSymb()
         {
-            if (input.Length == 1)
-                Clear();
-            else
+            if(input != null)
             {
-                if (input[input.Length - 1] == ',')
+                if (input.Length == 1)
+                {
                     comma = false;
-                input = input.Remove(input.Length - 1);
+                    sign = false;
+                    input = "0";
+                }
+                else
+                {
+                    if (input[^1] == ',')
+                        comma = false;
+                    input = input.Remove(input.Length - 1);
+                }
             }
         }
 
@@ -82,7 +90,7 @@ namespace Calculator
         {
             comma = false;
             sign = false;
-            input = "0";
+            input = null;
         }
     }
 }
