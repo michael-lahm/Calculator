@@ -22,11 +22,10 @@ namespace Calculator
     {
         private string? firstVar;
         private string? secondVar;
-        private char operation;
+        private char? operation;
         private EditString downString;
         public MainWindow()
         {
-            operation = ' ';
             downString = new EditString();
             InitializeComponent();
         }
@@ -34,7 +33,7 @@ namespace Calculator
         private void Update()
         {
             firstVar = downString.Input;
-            BlokAnswer.Text = firstVar;
+            BlockAnswer.Text = firstVar;
         }
 
         private void Button_num_1(object sender, EventArgs e)
@@ -121,22 +120,131 @@ namespace Calculator
             Update();
         }
 
-        private void ExampleOperation()
+        private void Button_clear_all(object sender, EventArgs e)
         {
+            downString.Clear();
+            BlockOperation.Text = string.Empty;
+            BlockAnswer.Text = "0";
+            secondVar = null;
+            firstVar = null;
+            operation = null;
+        }
 
+        private OutResult ExeсutOperation()
+        {
+            decimal x;
+            decimal y;
+            bool conver = decimal.TryParse(firstVar, out y) & decimal.TryParse(secondVar, out x);
+            firstVar = null;
+            secondVar = null;
+            if (!conver)
+                return new OutResult("Не удалось конвертировать", false);
+            decimal result;
+
+            switch (operation)
+            {
+                case '+':
+                    {
+                        if (x + y < decimal.MaxValue)
+                            result = x + y;
+                        else
+                            return new OutResult("Переполнение", false);
+                        break;
+                    }
+                case '-':
+                    {
+                        if (x - y > decimal.MinValue)
+                            result = x - y;
+                        else
+                            return new OutResult("Переполнение", false);
+                        break;
+                    }
+                case '*':
+                    {
+                        if (Math.Abs(x * y) > decimal.MaxValue)
+                            result = x * y;
+                        else
+                            return new OutResult("Переполнение", false);
+                        break;
+                    }
+                case '/':
+                    {
+                        if (y == 0)
+                            return new OutResult("Деление на ноль", false);
+                        if (Math.Abs(x / y) > decimal.MinValue)
+                            result = x / y;
+                        else
+                            return new OutResult("Переполнение", false);
+                        break;
+                    }
+                default:
+                    return new OutResult("Нет такой операции", false);
+            }
+
+            return new OutResult(result.ToString(), true);
+        }
+
+        private void InputOperation(char operation)
+        {
+            if (firstVar != null)
+            {
+                if (secondVar == null)
+                {
+                    secondVar = firstVar;
+                    this.operation = operation;
+                    BlockOperation.Text = secondVar + operation;
+                    firstVar = null;
+                }
+                else
+                {
+                    OutResult input = ExeсutOperation();
+                    if (input.IsSuccess)
+                    {
+                        secondVar = input.Result;
+                        this.operation = operation;
+                        BlockOperation.Text = secondVar + operation;
+                        BlockAnswer.Text = secondVar;
+                    }
+                    else
+                    {
+                        firstVar = null;
+                        secondVar = null;
+                        BlockAnswer.Text = input.ErrorMessage;
+                        BlockOperation.Text = string.Empty;
+                    }
+                }
+            }
+            else if (secondVar != null)
+            {
+                this.operation = operation;
+                BlockOperation.Text = secondVar + operation;
+            }
+            downString.Clear();
         }
 
         private void Button_plus(object sender, EventArgs e)
         {
-            if(firstVar == null)
-            {
-                secondVar = firstVar;
-                firstVar = "";
-                downString.Clear();
-                operation = '+';
-            }
-            else
-                ExampleOperation();
+            InputOperation('+');
+        }
+
+        private void Button_minus(object sender, EventArgs e)
+        {
+            InputOperation('-');
+        }
+
+        private void Button_multiply(object sender, EventArgs e)
+        {
+            InputOperation('*');
+        }
+
+        private void Button_divide(object sender, EventArgs e)
+        {
+            InputOperation('/');
+        }
+
+        private void Button_equally(object sender, EventArgs e)
+        {
+
         }
     }
 }

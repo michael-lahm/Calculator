@@ -5,18 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator"
         mc:Ignorable="d"
-        Title="Калькулятор" Height="425" Width="300" MinHeight="250" MinWidth="200">
+        Title="Калькулятор" Height="500" Width="300" MinHeight="250" MinWidth="200">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="40*"/>
         </Grid.RowDefinitions>
 
-        <Viewbox Margin="0,0,0,10" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0">
-            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Text="0" Name="BlokAnswer"/>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Name="BlockOperation"/>
+
+        <Viewbox Margin="0,0,0,10" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1">
+            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Text="0" Name="BlockAnswer"/>
         </Viewbox>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="50*"/>
@@ -113,7 +116,7 @@
                     <TextBlock Text="CE"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="3" Grid.Row="0">
+            <Button Grid.Column="3" Grid.Row="0" Click="Button_clear_all">
                 <Viewbox>
                     <TextBlock Text="C"/>
                 </Viewbox>
@@ -123,17 +126,17 @@
                     <TextBlock Text="&lt;-"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="7" Grid.Row="0">
+            <Button Grid.Column="7" Grid.Row="0" Click="Button_divide">
                 <Viewbox>
                     <TextBlock Text="/"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="7" Grid.Row="2">
+            <Button Grid.Column="7" Grid.Row="2" Click="Button_multiply">
                 <Viewbox>
                     <TextBlock Text="*"/>
                 </Viewbox>
             </Button>
-            <Button Grid.Column="7" Grid.Row="4">
+            <Button Grid.Column="7" Grid.Row="4" Click="Button_minus">
                 <Viewbox>
                     <TextBlock Text="-"/>
                 </Viewbox>
