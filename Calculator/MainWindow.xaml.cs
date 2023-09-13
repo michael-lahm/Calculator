@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Calculator
 {
@@ -33,7 +22,14 @@ namespace Calculator
         private void UpdateFirst()
         {
             firstVar = downString.Input;
-            BlockAnswer.Text = firstVar;
+            if (firstVar != null)
+                BlockAnswer.Text = firstVar;
+            else
+            {
+                if(operation != null)
+                    BlockOperation.Text = secondVar + operation;
+                BlockAnswer.Text = "0";
+            }
         }
 
         private void Button_num(object sender, EventArgs e)
@@ -45,8 +41,11 @@ namespace Calculator
 
         private void Button_sign(object sender, EventArgs e)
         {
-            downString.InvertSign();
-            UpdateFirst();
+            if(downString.Input != null)
+            {
+                downString.InvertSign();
+                UpdateFirst();
+            }
         }
 
         private void Button_comma(object sender, EventArgs e)
@@ -57,8 +56,11 @@ namespace Calculator
 
         private void Button_backspace(object sender, EventArgs e)
         {
-            downString.DeletSymb();
-            UpdateFirst();
+            if(downString.Input != null)
+            {
+                downString.DeletSymb();
+                UpdateFirst();
+            }
         }
 
         private void Button_clear_down(object sender, EventArgs e)
@@ -106,7 +108,7 @@ namespace Calculator
                     }
                 case '*':
                     {
-                        if (Math.Abs(x * y) > decimal.MaxValue)
+                        if (Math.Abs(x * y) < decimal.MaxValue)
                             result = x * y;
                         else
                             return new OutResult("Переполнение", false);
@@ -116,7 +118,7 @@ namespace Calculator
                     {
                         if (y == 0)
                             return new OutResult("Деление на ноль", false);
-                        if (Math.Abs(x / y) > decimal.MinValue)
+                        if (Math.Abs(x / y) < decimal.MinValue)
                             result = x / y;
                         else
                             return new OutResult("Переполнение", false);
@@ -129,6 +131,15 @@ namespace Calculator
             return new OutResult(result.ToString(), true);
         }
 
+        private void ErrorMessage(string error)
+        {
+            firstVar = null;
+            secondVar = null;
+            operation = null;
+            BlockAnswer.Text = error;
+            BlockOperation.Text = string.Empty;
+        }
+
         private void Button_operator(object sender, EventArgs e)
         {
             char operInButton = ((TextBlock)((Viewbox)((Button)sender).Content).Child).Text[0];
@@ -138,7 +149,14 @@ namespace Calculator
                 if (firstVar == null)
                     secondVar = "0";
                 else
+                {
+                    if (firstVar[^1] == ',')
+                    {
+                        firstVar = firstVar.Remove(firstVar.Length - 1);
+                        BlockAnswer.Text = firstVar;
+                    }
                     secondVar = firstVar;
+                }
                 operation = operInButton;
                 BlockOperation.Text = secondVar + operation;
             }
@@ -157,10 +175,7 @@ namespace Calculator
                         BlockAnswer.Text = secondVar;
                     }
                     else
-                    {
-                        BlockAnswer.Text = input.ErrorMessage;
-                        BlockOperation.Text = string.Empty;
-                    }
+                        ErrorMessage(input.ErrorMessage);
                 }
                 else
                 {
@@ -176,6 +191,11 @@ namespace Calculator
         {
             if (firstVar == null)
                 firstVar = "0";
+            else if (firstVar[^1] == ',')
+            {
+                firstVar = firstVar.Remove(firstVar.Length - 1);
+                BlockAnswer.Text = firstVar;
+            }
 
             if (operation == null)
             {
@@ -196,11 +216,7 @@ namespace Calculator
                     BlockAnswer.Text = secondVar;
                 }
                 else
-                {
-                    secondVar = null;
-                    BlockAnswer.Text = input.ErrorMessage;
-                    BlockOperation.Text = string.Empty;
-                }
+                    ErrorMessage(input.ErrorMessage);
             }
 
             downString.Clear();
