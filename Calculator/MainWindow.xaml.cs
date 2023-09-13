@@ -135,8 +135,6 @@ namespace Calculator
             decimal x;
             decimal y;
             bool conver = decimal.TryParse(firstVar, out y) & decimal.TryParse(secondVar, out x);
-            firstVar = null;
-            secondVar = null;
             if (!conver)
                 return new OutResult("Не удалось конвертировать", false);
             decimal result;
@@ -195,9 +193,11 @@ namespace Calculator
                     BlockOperation.Text = secondVar + operation;
                     firstVar = null;
                 }
-                else
+                else if(this.operation != null)
                 {
                     OutResult input = ExeсutOperation();
+                    firstVar = null;
+                    secondVar = null;
                     if (input.IsSuccess)
                     {
                         secondVar = input.Result;
@@ -207,11 +207,14 @@ namespace Calculator
                     }
                     else
                     {
-                        firstVar = null;
-                        secondVar = null;
                         BlockAnswer.Text = input.ErrorMessage;
                         BlockOperation.Text = string.Empty;
                     }
+                }
+                else
+                {
+                    this.operation = operation;
+                    BlockOperation.Text = secondVar + operation;
                 }
             }
             else if (secondVar != null)
@@ -244,7 +247,58 @@ namespace Calculator
 
         private void Button_equally(object sender, EventArgs e)
         {
-
+            if(operation == null)
+            {
+                if (firstVar == null)
+                    firstVar = "0";
+                secondVar = firstVar;
+                BlockOperation.Text = firstVar + '=';
+                downString.Clear();
+            }
+            else
+            {
+                if (secondVar == null)
+                {
+                    firstVar = downString.Input;
+                    secondVar = firstVar;
+                    OutResult input = ExeсutOperation();
+                    if (input.IsSuccess)
+                    {
+                        BlockOperation.Text = secondVar + operation + firstVar + '=';
+                        firstVar = null;
+                        secondVar = null;
+                        secondVar = input.Result;
+                        BlockAnswer.Text = secondVar;
+                    }
+                    else
+                    {
+                        firstVar = null;
+                        secondVar = null;
+                        BlockAnswer.Text = input.ErrorMessage;
+                        BlockOperation.Text = string.Empty;
+                    }
+                }
+                else
+                {
+                    firstVar = downString.Input;
+                    OutResult input = ExeсutOperation();
+                    if (input.IsSuccess)
+                    {
+                        BlockOperation.Text = secondVar + operation + firstVar + '=';
+                        firstVar = null;
+                        secondVar = null;
+                        secondVar = input.Result;
+                        BlockAnswer.Text = secondVar;
+                    }
+                    else
+                    {
+                        firstVar = null;
+                        secondVar = null;
+                        BlockAnswer.Text = input.ErrorMessage;
+                        BlockOperation.Text = string.Empty;
+                    }
+                }
+            }
         }
     }
 }
