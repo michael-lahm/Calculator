@@ -83,45 +83,51 @@ namespace Calculator
         {
             decimal x;
             decimal y;
+            decimal result;
             bool conver = decimal.TryParse(firstVar, out y) & decimal.TryParse(secondVar, out x);
             if (!conver)
                 return new OutResult("Не удалось конвертировать", false);
-            decimal result;
 
             switch (operation)
             {
                 case '+':
                     {
-                        if (x + y < decimal.MaxValue)
-                            result = x + y;
-                        else
+                        if ((x > 0 && y > decimal.MaxValue - x) || (x < 0 && y < decimal.MinValue - x))
                             return new OutResult("Переполнение", false);
+
+                        result = x + y;
                         break;
                     }
                 case '-':
                     {
-                        if (x - y > decimal.MinValue)
-                            result = x - y;
-                        else
+                        if ((x > 0 && y < decimal.MinValue + x) || (x < 0 && y > decimal.MaxValue + x))
                             return new OutResult("Переполнение", false);
+
+                        result = x - y;
                         break;
                     }
                 case '*':
                     {
-                        if (Math.Abs(x * y) < decimal.MaxValue)
-                            result = x * y;
-                        else
+                        if (Math.Abs(y) > 1 &&
+                            Math.Abs(x) > decimal.MaxValue / Math.Abs(y))
+                        {
                             return new OutResult("Переполнение", false);
+                        }
+
+                        result = x * y;
                         break;
                     }
                 case '/':
                     {
                         if (y == 0)
                             return new OutResult("Деление на ноль", false);
-                        if (Math.Abs(x / y) < decimal.MinValue)
-                            result = x / y;
-                        else
+                        if (Math.Abs(y) < 1 &&
+                            Math.Abs(x) > decimal.MaxValue * Math.Abs(y))
+                        {
                             return new OutResult("Переполнение", false);
+                        }
+
+                        result = x / y;
                         break;
                     }
                 default:
@@ -140,6 +146,26 @@ namespace Calculator
             BlockOperation.Text = string.Empty;
         }
 
+        private string DelExtraSymb(string str) 
+        {
+            if(!str.Contains(','))
+                return str;
+
+            for(int i = str.Length - 1; i > 0; i--)
+            {
+                if (str[i] == ',')
+                {
+                    str = str.Remove(str.Length - 1);
+                    break;
+                }
+                if (str[i] == '0' || str[i] == ',')
+                    str = str.Remove(str.Length - 1);
+                else
+                    break;
+            }
+            return str;
+        }
+
         private void Button_operator(object sender, EventArgs e)
         {
             char operInButton = ((TextBlock)((Viewbox)((Button)sender).Content).Child).Text[0];
@@ -150,11 +176,8 @@ namespace Calculator
                     secondVar = "0";
                 else
                 {
-                    if (firstVar[^1] == ',')
-                    {
-                        firstVar = firstVar.Remove(firstVar.Length - 1);
-                        BlockAnswer.Text = firstVar;
-                    }
+                    firstVar = DelExtraSymb(firstVar);
+                    BlockAnswer.Text = firstVar;
                     secondVar = firstVar;
                 }
                 operation = operInButton;
@@ -191,9 +214,9 @@ namespace Calculator
         {
             if (firstVar == null)
                 firstVar = "0";
-            else if (firstVar[^1] == ',')
+            else
             {
-                firstVar = firstVar.Remove(firstVar.Length - 1);
+                firstVar = DelExtraSymb(firstVar);
                 BlockAnswer.Text = firstVar;
             }
 
